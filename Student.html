@@ -1,0 +1,583 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Find Your Ideal Branch!</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Custom CSS for finer control and Inter font */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f0f2f5; /* Light gray background */
+            display: flex;
+            justify-content: center;
+            align-items: flex-start; /* Align to top for longer forms */
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            background-color: #ffffff;
+            padding: 30px;
+            border-radius: 12px; /* More rounded corners */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1); /* Softer shadow */
+            width: 100%;
+            max-width: 800px; /* Wider container */
+            margin-top: 20px; /* Space from top */
+        }
+
+        h1 {
+            text-align: center;
+            color: #1a202c; /* Darker text for headings */
+            margin-bottom: 30px;
+            font-size: 2.25rem; /* Larger heading */
+            font-weight: 700; /* Bold */
+        }
+
+        .question-group {
+            margin-bottom: 25px;
+            padding: 20px;
+            border: 1px solid #e2e8f0; /* Light border */
+            border-radius: 8px;
+            background-color: #f7fafc; /* Very light background for question groups */
+        }
+
+        .question-group p {
+            font-weight: 600; /* Semi-bold */
+            margin-bottom: 15px;
+            color: #2d3748; /* Slightly darker text */
+            font-size: 1.15em;
+        }
+
+        .question-group label {
+            display: block;
+            margin-bottom: 12px;
+            cursor: pointer;
+            font-size: 1em;
+            color: #4a5568; /* Medium gray text */
+            display: flex;
+            align-items: center;
+        }
+
+        .question-group input[type="checkbox"],
+        .question-group input[type="radio"] {
+            margin-right: 12px; /* More space */
+            transform: scale(1.3); /* Larger checkboxes/radios */
+            accent-color: #4299e1; /* Blue accent color */
+        }
+
+        .marks-input-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px; /* Space between mark inputs */
+            margin-top: 15px;
+        }
+
+        .marks-input-group > div {
+            flex: 1 1 calc(50% - 15px); /* Two columns on larger screens */
+            min-width: 150px; /* Minimum width for inputs */
+        }
+
+        .marks-input-group label {
+            font-weight: 500;
+            margin-bottom: 5px;
+            color: #2d3748;
+        }
+
+        .marks-input-group input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 5px;
+            font-size: 1em;
+            box-sizing: border-box; /* Include padding in width */
+        }
+
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #4299e1; /* Tailwind blue-500 */
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1em;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.1s ease;
+            margin-top: 30px;
+            font-weight: 600;
+        }
+
+        button:hover {
+            background-color: #3182ce; /* Darker blue on hover */
+            transform: translateY(-2px); /* Slight lift effect */
+        }
+
+        .results-section {
+            margin-top: 30px;
+            padding: 25px;
+            border: 1px solid #68d391; /* Green border */
+            background-color: #e6fffa; /* Light green background */
+            border-radius: 8px;
+            color: #2f855a; /* Dark green text */
+            display: none; /* Hidden by default */
+            line-height: 1.7; /* Improved readability */
+        }
+
+        .results-section h2 {
+            color: #38a169; /* Darker green heading */
+            margin-bottom: 15px;
+            font-size: 1.75rem;
+            font-weight: 700;
+        }
+
+        .results-section p {
+            margin-bottom: 10px;
+        }
+
+        .results-section strong {
+            color: #2f855a; /* Ensure strong text is visible */
+        }
+
+        .warning-message {
+            color: #c53030; /* Red text for warning */
+            background-color: #fed7d7; /* Light red background */
+            border: 1px solid #fc8181;
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 20px;
+            font-weight: 600;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+                margin: 10px;
+            }
+            h1 {
+                font-size: 1.75rem;
+            }
+            .question-group p {
+                font-size: 1em;
+            }
+            button {
+                padding: 12px;
+                font-size: 1em;
+            }
+            .marks-input-group > div {
+                flex: 1 1 100%; /* Single column on small screens */
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Find Your Ideal Branch!</h1>
+        <form id="branchQuizForm">
+            <div class="question-group">
+                <p><strong>1. Which subjects do you enjoy and excel at the most? (Select all that apply)</strong></p>
+                <label><input type="checkbox" name="favoriteSubject" value="Math"> Mathematics</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="Physics"> Physics</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="Chemistry"> Chemistry</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="Biology"> Biology</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="Computer Science"> Computer Science/Programming</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="Economics"> Economics/Business Studies</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="History"> History/Political Science</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="Literature"> Literature/Languages</label><br>
+                <label><input type="checkbox" name="favoriteSubject" value="Art"> Art/Design</label><br>
+            </div>
+
+            <div class="question-group">
+                <p><strong>2. Enter your marks (out of 100) for the following subjects. Enter 0 if N/A or you don't have marks for a subject:</strong></p>
+                <div class="marks-input-group">
+                    <div>
+                        <label for="marksMath">Mathematics:</label>
+                        <input type="number" id="marksMath" name="marksMath" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                    <div>
+                        <label for="marksPhysics">Physics:</label>
+                        <input type="number" id="marksPhysics" name="marksPhysics" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                    <div>
+                        <label for="marksChemistry">Chemistry:</label>
+                        <input type="number" id="marksChemistry" name="marksChemistry" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                    <div>
+                        <label for="marksBiology">Biology:</label>
+                        <input type="number" id="marksBiology" name="marksBiology" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                    <div>
+                        <label for="marksCompSci">Computer Science:</label>
+                        <input type="number" id="marksCompSci" name="marksCompSci" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                    <div>
+                        <label for="marksEconomics">Economics:</label>
+                        <input type="number" id="marksEconomics" name="marksEconomics" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                    <div>
+                        <label for="marksHistory">History:</label>
+                        <input type="number" id="marksHistory" name="marksHistory" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                    <div>
+                        <label for="marksLiterature">Literature:</label>
+                        <input type="number" id="marksLiterature" name="marksLiterature" min="0" max="100" value="0" placeholder="0-100 or 0 for N/A">
+                    </div>
+                </div>
+            </div>
+
+            <div class="question-group">
+                <p><strong>3. What kind of problems do you enjoy solving?</strong></p>
+                <label><input type="radio" name="problemSolving" value="Technical/Design"> Technical challenges, designing systems, or building things</label><br>
+                <label><input type="radio" name="problemSolving" value="Scientific/Research"> Scientific mysteries, understanding natural phenomena, conducting experiments</label><br>
+                <label><input type="radio" name="problemSolving" value="Business/Financial"> Business strategy, financial analysis, market trends</label><br>
+                <label><input type="radio" name="problemSolving" value="Social/Human"> Human behavior, societal issues, communication, ethical dilemmas</label><br>
+                <label><input type="radio" name="problemSolving" value="Creative/Aesthetic"> Creating visual art, music, stories, or user experiences</label><br>
+            </div>
+
+            <div class="question-group">
+                <p><strong>4. How do you prefer to learn and work?</strong></p>
+                <label><input type="radio" name="workStyle" value="Hands-on/Practical"> Hands-on, practical application, tinkering</label><br>
+                <label><input type="radio" name="workStyle" value="Theoretical/Analytical"> Deep theoretical understanding, logical analysis, research</label><br>
+                <label><input type="radio" name="workStyle" value="Collaborative/Communicative"> Working in teams, presenting ideas, discussing concepts</label><br>
+                <label><input type="radio" name="workStyle" value="Independent/Self-driven"> Working independently, self-directed projects</label><br>
+            </div>
+
+            <div class="question-group">
+                <p><strong>5. What kind of future career environment appeals to you most?</strong></p>
+                <label><input type="radio" name="careerEnvironment" value="Lab/Research"> Laboratory, research facility, or academic institution</label><br>
+                <label><input type="radio" name="careerEnvironment" value="Office/Corporate"> Corporate office, business setting, financial institution</label><br>
+                <label><input type="radio" name="careerEnvironment" value="Field/Site"> Construction site, manufacturing plant, or outdoor environment</label><br>
+                <label><input type="radio" name="careerEnvironment" value="Studio/Creative"> Art studio, design firm, or media production house</label><br>
+                <label><input type="radio" name="careerEnvironment" value="Community/Social"> Non-profit organization, public service, or community development</label><br>
+            </div>
+
+            <div class="question-group">
+                <p><strong>6. Which of these learning activities do you enjoy most?</strong></p>
+                <label><input type="radio" name="learningActivity" value="Projects"> Working on hands-on projects and experiments</label><br>
+                <label><input type="radio" name="learningActivity" value="Lectures/Reading"> Attending lectures and extensive reading of theoretical material</label><br>
+                <label><input type="radio" name="learningActivity" value="Discussions"> Engaging in group discussions and debates</label><br>
+                <label><input type="radio" name="learningActivity" value="Research"> Conducting independent research and analysis</label><br>
+            </div>
+
+            <div class="question-group">
+                <p><strong>7. What is your primary motivation for pursuing higher education?</strong></p>
+                <label><input type="radio" name="motivation" value="Earning Potential"> High earning potential and career growth</label><br>
+                <label><input type="radio" name="motivation" value="Social Impact"> Making a positive impact on society or the environment</label><br>
+                <label><input type="radio" name="motivation" value="Intellectual Curiosity"> Intellectual curiosity and passion for a subject</label><br>
+                <label><input type="radio" name="motivation" value="Job Security"> Job security and stability</label><br>
+            </div>
+
+            <div class="question-group">
+                <p><strong>8. How comfortable are you with abstract concepts versus concrete applications?</strong></p>
+                <label><input type="radio" name="abstractVsConcrete" value="HighlyTheoretical"> Highly comfortable with abstract theories and complex concepts</label><br>
+                <label><input type="radio" name="abstractVsConcrete" value="Balanced"> A good balance of theoretical understanding and practical application</label><br>
+                <label><input type="radio" name="abstractVsConcrete" value="HighlyPractical"> Prefer concrete, practical applications and hands-on work</label><br>
+            </div>
+
+            <button type="submit">Submit Quiz</button>
+        </form>
+
+        <div id="results" class="results-section">
+            </div>
+    </div>
+
+    <script>
+        document.getElementById('branchQuizForm').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent the form from submitting normally
+
+            const resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Clear previous results
+            resultsDiv.style.display = 'block'; // Show the results section
+
+            // Initialize scores for each branch
+            const branchScores = {
+                'Engineering': 0,
+                'Medical & Life Sciences': 0,
+                'Commerce & Business': 0,
+                'Humanities & Social Sciences': 0,
+                'Arts & Design': 0
+            };
+
+            // --- Process Question 1: Favorite Subjects (Interest-based) ---
+            const favoriteSubjects = document.querySelectorAll('input[name="favoriteSubject"]:checked');
+            favoriteSubjects.forEach(subject => {
+                switch (subject.value) {
+                    case 'Math':
+                    case 'Physics':
+                        branchScores['Engineering'] += 3;
+                        branchScores['Commerce & Business'] += 1;
+                        break;
+                    case 'Chemistry':
+                        branchScores['Medical & Life Sciences'] += 2;
+                        branchScores['Engineering'] += 1;
+                        break;
+                    case 'Biology':
+                        branchScores['Medical & Life Sciences'] += 3;
+                        branchScores['Engineering'] += 1;
+                        break;
+                    case 'Computer Science':
+                        branchScores['Engineering'] += 4;
+                        branchScores['Commerce & Business'] += 2;
+                        break;
+                    case 'Economics':
+                        branchScores['Commerce & Business'] += 4;
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        break;
+                    case 'History':
+                    case 'Literature':
+                        branchScores['Humanities & Social Sciences'] += 3;
+                        break;
+                    case 'Art':
+                        branchScores['Arts & Design'] += 4;
+                        branchScores['Engineering'] += 1;
+                        break;
+                }
+            });
+
+            // --- Process Question 2: Marks (Aptitude-based, higher weight) ---
+            const marks = {
+                Math: parseInt(document.getElementById('marksMath').value) || 0,
+                Physics: parseInt(document.getElementById('marksPhysics').value) || 0,
+                Chemistry: parseInt(document.getElementById('marksChemistry').value) || 0,
+                Biology: parseInt(document.getElementById('marksBiology').value) || 0,
+                ComputerScience: parseInt(document.getElementById('marksCompSci').value) || 0,
+                Economics: parseInt(document.getElementById('marksEconomics').value) || 0,
+                History: parseInt(document.getElementById('marksHistory').value) || 0,
+                Literature: parseInt(document.getElementById('marksLiterature').value) || 0,
+            };
+
+            let totalValidMarks = 0;
+            let validSubjectCount = 0;
+
+            // Only add marks if they are greater than 0 (i.e., not N/A)
+            if (marks.Math > 0) { branchScores['Engineering'] += (marks.Math * 0.15); totalValidMarks += marks.Math; validSubjectCount++; }
+            if (marks.Physics > 0) { branchScores['Engineering'] += (marks.Physics * 0.15); totalValidMarks += marks.Physics; validSubjectCount++; }
+            if (marks.ComputerScience > 0) { branchScores['Engineering'] += (marks.ComputerScience * 0.1); totalValidMarks += marks.ComputerScience; validSubjectCount++; }
+
+            if (marks.Biology > 0) { branchScores['Medical & Life Sciences'] += (marks.Biology * 0.2); totalValidMarks += marks.Biology; validSubjectCount++; }
+            if (marks.Chemistry > 0) { branchScores['Medical & Life Sciences'] += (marks.Chemistry * 0.15); totalValidMarks += marks.Chemistry; validSubjectCount++; }
+            if (marks.Physics > 0) branchScores['Medical & Life Sciences'] += (marks.Physics * 0.05); // Physics also relevant for Med
+
+            if (marks.Economics > 0) { branchScores['Commerce & Business'] += (marks.Economics * 0.2); totalValidMarks += marks.Economics; validSubjectCount++; }
+            if (marks.Math > 0) branchScores['Commerce & Business'] += (marks.Math * 0.1); // Math also relevant for Commerce
+
+            if (marks.History > 0) { branchScores['Humanities & Social Sciences'] += (marks.History * 0.15); totalValidMarks += marks.History; validSubjectCount++; }
+            if (marks.Literature > 0) { branchScores['Humanities & Social Sciences'] += (marks.Literature * 0.15); totalValidMarks += marks.Literature; validSubjectCount++; }
+            if (marks.Economics > 0) branchScores['Humanities & Social Sciences'] += (marks.Economics * 0.05); // Economics can overlap
+
+            // --- Process Question 3: Problem Solving ---
+            const problemSolving = document.querySelector('input[name="problemSolving"]:checked');
+            if (problemSolving) {
+                switch (problemSolving.value) {
+                    case 'Technical/Design':
+                        branchScores['Engineering'] += 3;
+                        branchScores['Arts & Design'] += 1;
+                        break;
+                    case 'Scientific/Research':
+                        branchScores['Medical & Life Sciences'] += 3;
+                        branchScores['Engineering'] += 2;
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        break;
+                    case 'Business/Financial':
+                        branchScores['Commerce & Business'] += 3;
+                        branchScores['Engineering'] += 1;
+                        break;
+                    case 'Social/Human':
+                        branchScores['Humanities & Social Sciences'] += 3;
+                        branchScores['Medical & Life Sciences'] += 1;
+                        break;
+                    case 'Creative/Aesthetic':
+                        branchScores['Arts & Design'] += 3;
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        break;
+                }
+            }
+
+            // --- Process Question 4: Work Style ---
+            const workStyle = document.querySelector('input[name="workStyle"]:checked');
+            if (workStyle) {
+                switch (workStyle.value) {
+                    case 'Hands-on/Practical':
+                        branchScores['Engineering'] += 2;
+                        branchScores['Arts & Design'] += 1;
+                        break;
+                    case 'Theoretical/Analytical':
+                        branchScores['Engineering'] += 2;
+                        branchScores['Medical & Life Sciences'] += 2;
+                        branchScores['Commerce & Business'] += 1;
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        break;
+                    case 'Collaborative/Communicative':
+                        branchScores['Humanities & Social Sciences'] += 2;
+                        branchScores['Commerce & Business'] += 1;
+                        break;
+                    case 'Independent/Self-driven':
+                        branchScores['Medical & Life Sciences'] += 1;
+                        branchScores['Arts & Design'] += 1;
+                        break;
+                }
+            }
+
+            // --- Process Question 5: Career Environment ---
+            const careerEnvironment = document.querySelector('input[name="careerEnvironment"]:checked');
+            if (careerEnvironment) {
+                switch (careerEnvironment.value) {
+                    case 'Lab/Research':
+                        branchScores['Medical & Life Sciences'] += 2;
+                        branchScores['Engineering'] += 1;
+                        break;
+                    case 'Office/Corporate':
+                        branchScores['Commerce & Business'] += 2;
+                        branchScores['Engineering'] += 1;
+                        break;
+                    case 'Field/Site':
+                        branchScores['Engineering'] += 2;
+                        break;
+                    case 'Studio/Creative':
+                        branchScores['Arts & Design'] += 2;
+                        break;
+                    case 'Community/Social':
+                        branchScores['Humanities & Social Sciences'] += 2;
+                        branchScores['Medical & Life Sciences'] += 1;
+                        break;
+                }
+            }
+
+            // --- Process Question 6: Learning Activities ---
+            const learningActivity = document.querySelector('input[name="learningActivity"]:checked');
+            if (learningActivity) {
+                switch (learningActivity.value) {
+                    case 'Projects':
+                        branchScores['Engineering'] += 2;
+                        branchScores['Arts & Design'] += 1;
+                        break;
+                    case 'Lectures/Reading':
+                        branchScores['Medical & Life Sciences'] += 1;
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        branchScores['Commerce & Business'] += 1;
+                        break;
+                    case 'Discussions':
+                        branchScores['Humanities & Social Sciences'] += 2;
+                        branchScores['Commerce & Business'] += 1;
+                        break;
+                    case 'Research':
+                        branchScores['Medical & Life Sciences'] += 2;
+                        branchScores['Engineering'] += 1;
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        break;
+                }
+            }
+
+            // --- Process Question 7: Motivation ---
+            const motivation = document.querySelector('input[name="motivation"]:checked');
+            if (motivation) {
+                switch (motivation.value) {
+                    case 'Earning Potential':
+                        branchScores['Engineering'] += 2;
+                        branchScores['Commerce & Business'] += 2;
+                        break;
+                    case 'Social Impact':
+                        branchScores['Medical & Life Sciences'] += 2;
+                        branchScores['Humanities & Social Sciences'] += 2;
+                        branchScores['Engineering'] += 1; // e.g., environmental engineering
+                        break;
+                    case 'Intellectual Curiosity':
+                        branchScores['Engineering'] += 1;
+                        branchScores['Medical & Life Sciences'] += 1;
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        break;
+                    case 'Job Security':
+                        branchScores['Engineering'] += 1;
+                        branchScores['Commerce & Business'] += 1;
+                        break;
+                }
+            }
+
+            // --- Process Question 8: Abstract vs. Concrete ---
+            const abstractVsConcrete = document.querySelector('input[name="abstractVsConcrete"]:checked');
+            if (abstractVsConcrete) {
+                switch (abstractVsConcrete.value) {
+                    case 'HighlyTheoretical':
+                        branchScores['Medical & Life Sciences'] += 2; // Pure sciences
+                        branchScores['Humanities & Social Sciences'] += 1;
+                        break;
+                    case 'Balanced':
+                        branchScores['Engineering'] += 2;
+                        branchScores['Commerce & Business'] += 1;
+                        break;
+                    case 'HighlyPractical':
+                        branchScores['Engineering'] += 2;
+                        branchScores['Arts & Design'] += 1;
+                        break;
+                }
+            }
+
+
+            // --- Determine the top two highest scoring branches ---
+            const sortedBranches = Object.entries(branchScores)
+                .map(([branch, score]) => ({ branch, score }))
+                .sort((a, b) => b.score - a.score); // Sort in descending order of score
+
+            let suggestedBranches = [];
+            if (sortedBranches.length > 0 && sortedBranches[0].score > 0) {
+                suggestedBranches.push(sortedBranches[0].branch); // Add the top branch
+
+                // Add the second branch if it exists and has a positive score, and is different from the first
+                if (sortedBranches.length > 1 && sortedBranches[1].score > 0 && sortedBranches[1].branch !== suggestedBranches[0]) {
+                    suggestedBranches.push(sortedBranches[1].branch);
+                } else if (sortedBranches.length > 2 && sortedBranches[2].score > 0 && sortedBranches[2].branch !== suggestedBranches[0]) {
+                    // If the second branch is the same as the first (due to a perfect tie or a very close score resulting in the same branch being picked twice),
+                    // try to get the third distinct one if available and positive.
+                    suggestedBranches.push(sortedBranches[2].branch);
+                }
+            }
+
+            // --- Display Results ---
+            if (suggestedBranches.length > 0) {
+                resultsDiv.innerHTML += '<h2>Your Top Suggested Branches:</h2>';
+                suggestedBranches.slice(0, 2).forEach(branch => { // Ensure only top two are displayed
+                    resultsDiv.innerHTML += `<p><strong>${branch}</strong></p>`;
+                    // Add more specific descriptions based on the branch
+                    switch (branch) {
+                        case 'Engineering':
+                            resultsDiv.innerHTML += `<p>Your strong performance in Mathematics and Physics/Computer Science, combined with your interest in technical challenges and hands-on work, makes <strong>Engineering</strong> a highly suitable path. Consider specializations like Computer Science, Mechanical, Civil, or Electrical Engineering.</p>`;
+                            break;
+                        case 'Medical & Life Sciences':
+                            resultsDiv.innerHTML += `<p>Your excellent marks in Biology and Chemistry, coupled with an interest in scientific research and understanding living systems, point strongly towards <strong>Medical & Life Sciences</strong>. Explore careers in Medicine, Biotechnology, Pharmacy, or related health fields.</p>`;
+                            break;
+                        case 'Commerce & Business':
+                            resultsDiv.innerHTML += `<p>Your aptitude in Economics and Mathematics, along with your interest in business strategy and financial analysis, suggests <strong>Commerce & Business</strong> is a great fit. Look into paths like Business Administration, Finance, Accounting, or Data Analytics.</p>`;
+                            break;
+                        case 'Humanities & Social Sciences':
+                            resultsDiv.innerHTML += `<p>Your strong performance in subjects like History and Literature, combined with an interest in human behavior, societal issues, and communication, makes <strong>Humanities & Social Sciences</strong> a feasible choice. Consider fields like Psychology, Sociology, Political Science, or Journalism.</p>`;
+                            break;
+                        case 'Arts & Design':
+                            resultsDiv.innerHTML += `<p>Your creative inclination, interest in visual expression, and enjoyment of design-oriented problem-solving indicate a strong potential in <strong>Arts & Design</strong>. Explore areas like Fine Arts, Graphic Design, Fashion Design, or Architecture.</p>`;
+                            break;
+                    }
+                });
+
+                // Add low marks warning if applicable
+                if (validSubjectCount > 0) { // Only check if at least one subject mark was entered
+                    const averageMarks = totalValidMarks / validSubjectCount;
+                    if (averageMarks < 40) {
+                        resultsDiv.innerHTML += `
+                            <div class="warning-message">
+                                <p><strong>Important Note:</strong> Your average academic performance in the subjects you provided is below 40%. While interests are crucial, strong foundational skills are key for success in higher education. We recommend focusing on strengthening your core academic skills or exploring alternative pathways that align with your current strengths and learning style.</p>
+                            </div>
+                        `;
+                    }
+                }
+
+            } else {
+                resultsDiv.innerHTML = '<h2>Unable to Determine</h2><p>Please ensure you have entered your marks and answered all questions. Your responses did not clearly align with specific branches, or you might have missed some answers.</p>';
+            }
+        });
+    </script>
+</body>
+</html>
